@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Images - Furniture Pampanga</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .upload-field { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+        .upload-field input[type=file] { display: none; }
+        .upload-btn {
+            background: var(--accent, #c8956c); color: #fff; border: none;
+            padding: 0.45rem 1rem; border-radius: 5px; cursor: pointer;
+            font-size: 0.85rem; font-family: 'DM Sans', sans-serif; white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .upload-btn:hover { background: #b07d58; }
+        .upload-thumb {
+            width: 48px; height: 48px; object-fit: cover; border-radius: 4px;
+            border: 1px solid var(--border-color, #e8e0d5); display: none;
+        }
+        .upload-status { font-size: 0.8rem; color: var(--text-muted, #888); }
+        .upload-status.ok { color: #2e7d32; }
+        .upload-status.err { color: #c62828; }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="admin-header-inner">
+            <div class="admin-header-brand">
+                <img src="assets/logo.png" alt="Logo" class="logo-icon" />
+                <span>Admin Panel</span>
+            </div>
+            <nav class="admin-header-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link">🏠 Dashboard</a>
+                <a href="admin.html" class="admin-nav-link active">🖼️ Manage Content</a>
+                <a href="#" onclick="adminLogout(); return false;" class="admin-nav-link admin-logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-page">
+        <div class="admin-container">
+            <h1>Product Image  Manager</h1>
+            <p class="admin-desc">Attached images for each product. Images will be saved and displayed on product detail pages.</p>
+
+
+            <div class="admin-card home-bg-card">
+                <h2>Home background image</h2>
+                <p class="admin-desc" style="margin-bottom: 1rem;">upload ang mga images para sa hero/banner ng home page. Ito ang malaking background sa taas ng Home.</p>
+                <div class="home-bg-preview-wrap">
+                    <div class="preview-box home-bg-preview empty" id="homeBgPreview">Preview</div>
+                </div>
+                <div class="upload-field">
+                    <button type="button" class="upload-btn" onclick="document.getElementById('homeBgFile').click()">📁 Choose Image</button>
+                    <input type="file" id="homeBgFile" accept="image/*" />
+                    <img class="upload-thumb" id="homeBgThumb" />
+                    <span class="upload-status" id="homeBgStatus"></span>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <label class="admin-label" for="productId">Product (ID)</label>
+                <select id="productId" class="admin-input product-id-select">
+                    <option value="chair-01">Chair 01 - Dining Chair (High-Back)</option>
+                    <option value="chair-02">Chair 02 - Dining Chair (Low-Back)</option>
+                    <option value="chair-03">Chair 03 - Dining Chair (Upholstered)</option>
+                    <option value="chair-04">Chair 04 - Padded Dining Chair</option>
+                    <option value="chair-05">Chair 05 - Solhiya Dining Chair</option>
+                    <option value="bed-01">Bed 01 - Queen Sized Bed</option>
+                    <option value="bed-02">Bed 02 - King Sized Bed</option>
+                    <option value="bed-03">Bed 03 - Single Loft Bed</option>
+                    <option value="bed-04">Bed 04 - Double Deck Bed</option>
+                    <option value="bed-05">Bed 05 - Platform Bed</option>
+                    <option value="center-01">Center Table 01 - Square Coffee Table</option>
+                    <option value="center-02">Center Table 02 - Nesting Table Set</option>
+                    <option value="center-03">Center Table 03 - Marble Top Table</option>
+                    <option value="center-04">Center Table 04 - Oval Center Table</option>
+                    <option value="ottoman-01">Ottoman 01 - Round Storage Ottoman</option>
+                    <option value="ottoman-02">Ottoman 02 - Square Fabric Ottoman</option>
+                    <option value="ottoman-03">Ottoman 03 - Leather Padded Ottoman</option>
+                    <option value="ottoman-04">Ottoman 04 - Bench Ottoman</option>
+                    <option value="table-01">Table 01 - Acacia Dining Table</option>
+                    <option value="table-02">Table 02 - Solid Wood Dining Table</option>
+                    <option value="table-03">Table 03 - Marble Dining Table</option>
+                    <option value="table-04">Table 04 - Glass Dining Table</option>
+                    <option value="table-05">Table 05 - Executive Desk</option>
+                    <option value="accent-01">Accent Chair 01 - Lounge Accent Chair</option>
+                    <option value="accent-02">Accent Chair 02 - Wingback Chair</option>
+                    <option value="accent-03">Accent Chair 03 - Barrel Chair</option>
+                    <option value="accent-04">Accent Chair 04 - Slipper Chair</option>
+                    <option value="accent-05">Accent Chair 05 - Solhiya Accent</option>
+                    <option value="console-01">Console 01 - Console with Drawers</option>
+                    <option value="console-02">Console 02 - Minimalist Entryway Table</option>
+                    <option value="console-03">Console 03 - Industrial Console</option>
+                    <option value="console-04">Console 04 - Glass Console</option>
+                    <option value="bench-01">Bench 01 - Padded Entryway Bench</option>
+                    <option value="bench-02">Bench 02 - Solid Wood Bench</option>
+                    <option value="bench-03">Bench 03 - Outdoor Garden Bench</option>
+                    <option value="bench-04">Bench 04 - Bedroom End Bench</option>
+                    <option value="sofa-01">Sofa 01 - Fully Upholstered Sofa</option>
+                    <option value="sofa-02">Sofa 02 - Wood-Frame Sofa</option>
+                    <option value="sofa-03">Sofa 03 - L-Shaped Sectional</option>
+                    <option value="sofa-04">Sofa 04 - Loveseat</option>
+                    <option value="sofa-05">Sofa 05 - Recliner Sofa</option>
+                    <option value="night-01">Night Table 01 - Accent Night Table</option>
+                    <option value="night-02">Night Table 02 - Square Side Table</option>
+                    <option value="night-03">Night Table 03 - Round End Table</option>
+                    <option value="night-04">Night Table 04 - Floating Nightstand</option>
+                    <option value="barstool-01">Barstool 01 - Wood Upholstered Stool</option>
+                    <option value="barstool-02">Barstool 02 - Industrial Metal Stool</option>
+                    <option value="barstool-03">Barstool 03 - Adjustable Barstool</option>
+                    <option value="barstool-04">Barstool 04 - Backless Stool</option>
+                    <option value="outdoor-01">Outdoor 01 - Patio Dining Set</option>
+                    <option value="outdoor-02">Outdoor 02 - Wicker Lounge Chair</option>
+                    <option value="outdoor-03">Outdoor 03 - Garden Side Table</option>
+                    <option value="outdoor-04">Outdoor 04 - Poolside Lounger</option>
+                </select>
+            </div>
+
+            <div class="admin-card">
+                <h2>Product images</h2>
+                <div class="image-preview-row">
+                    <div class="preview-box empty" data-preview="0">Preview 1</div>
+                    <div class="preview-box empty" data-preview="1">Preview 2</div>
+                    <div class="preview-box empty" data-preview="2">Preview 3</div>
+                    <div class="preview-box empty" data-preview="3">Preview 4</div>
+                </div>
+                <label class="admin-label">Image 1 (main)</label>
+                <div class="upload-field"><button type="button" class="upload-btn product-upload-btn" data-index="0">📁 Choose Image</button><input type="file" class="product-file-input" data-index="0" accept="image/*" /><img class="upload-thumb product-thumb" data-index="0" /><span class="upload-status product-upload-status" data-index="0"></span></div>
+                <label class="admin-label">Image 2</label>
+                <div class="upload-field"><button type="button" class="upload-btn product-upload-btn" data-index="1">📁 Choose Image</button><input type="file" class="product-file-input" data-index="1" accept="image/*" /><img class="upload-thumb product-thumb" data-index="1" /><span class="upload-status product-upload-status" data-index="1"></span></div>
+                <label class="admin-label">Image 3</label>
+                <div class="upload-field"><button type="button" class="upload-btn product-upload-btn" data-index="2">📁 Choose Image</button><input type="file" class="product-file-input" data-index="2" accept="image/*" /><img class="upload-thumb product-thumb" data-index="2" /><span class="upload-status product-upload-status" data-index="2"></span></div>
+                <label class="admin-label">Image 4</label>
+                <div class="upload-field"><button type="button" class="upload-btn product-upload-btn" data-index="3">📁 Choose Image</button><input type="file" class="product-file-input" data-index="3" accept="image/*" /><img class="upload-thumb product-thumb" data-index="3" /><span class="upload-status product-upload-status" data-index="3"></span></div>
+                <input type="hidden" class="admin-image-url" data-index="0" />
+                <input type="hidden" class="admin-image-url" data-index="1" />
+                <input type="hidden" class="admin-image-url" data-index="2" />
+                <input type="hidden" class="admin-image-url" data-index="3" />
+            </div>
+
+            <div class="admin-card tab-content-editor">
+                <h2>Product tab content</h2>
+                <p class="admin-desc" style="margin-bottom: 1rem;">Piliin ang subcategory at variant, tapos i-edit ang Description, Specifications, at Care Instructions para sa specific na item.</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <div style="flex: 1; min-width: 180px;">
+                        <label class="admin-label" for="tabContentSubcategory">Subcategory</label>
+                        <select id="tabContentSubcategory" class="admin-input">
+                            <optgroup label="Chair">
+                                <option value="chair_highback">Dining Chair (High-Back)</option>
+                                <option value="chair_lowback">Dining Chair (Low-Back)</option>
+                                <option value="chair_upholstered">Dining Chair (Upholstered)</option>
+                                <option value="chair_padded">Padded Dining Chair</option>
+                                <option value="chair_solhiya">Solhiya Dining Chair</option>
+                            </optgroup>
+                            <optgroup label="Bed">
+                                <option value="bed_queen">Queen Sized Bed</option>
+                                <option value="bed_king">King Sized Bed</option>
+                                <option value="bed_singleloft">Single Loft Bed</option>
+                                <option value="bed_doubledeck">Double Deck Bed</option>
+                                <option value="bed_platform">Platform Bed</option>
+                            </optgroup>
+                            <optgroup label="Center Table">
+                                <option value="center_squarecoffee">Square Coffee Table</option>
+                                <option value="center_nesting">Nesting Table Set</option>
+                                <option value="center_marbletop">Marble Top Table</option>
+                                <option value="center_oval">Oval Center Table</option>
+                            </optgroup>
+                            <optgroup label="Ottoman">
+                                <option value="ottoman_roundstorage">Round Storage Ottoman</option>
+                                <option value="ottoman_squarefabric">Square Fabric Ottoman</option>
+                                <option value="ottoman_leatherpadded">Leather Padded Ottoman</option>
+                                <option value="ottoman_bench">Bench Ottoman</option>
+                            </optgroup>
+                            <optgroup label="Table">
+                                <option value="table_acacia">Acacia Dining Table</option>
+                                <option value="table_solidwood">Solid Wood Dining Table</option>
+                                <option value="table_marble">Marble Dining Table</option>
+                                <option value="table_glass">Glass Dining Table</option>
+                                <option value="table_executive">Executive Desk</option>
+                            </optgroup>
+                            <optgroup label="Accent Chair">
+                                <option value="accent_lounge">Lounge Accent Chair</option>
+                                <option value="accent_wingback">Wingback Chair</option>
+                                <option value="accent_barrel">Barrel Chair</option>
+                                <option value="accent_slipper">Slipper Chair</option>
+                                <option value="accent_solhiya">Solhiya Accent</option>
+                            </optgroup>
+                            <optgroup label="Console Table">
+                                <option value="console_drawers">Console with Drawers</option>
+                                <option value="console_minimalist">Minimalist Entryway Table</option>
+                                <option value="console_industrial">Industrial Console</option>
+                                <option value="console_glass">Glass Console</option>
+                            </optgroup>
+                            <optgroup label="Bench">
+                                <option value="bench_paddedentry">Padded Entryway Bench</option>
+                                <option value="bench_solidwood">Solid Wood Bench</option>
+                                <option value="bench_outdoorgarden">Outdoor Garden Bench</option>
+                                <option value="bench_bedroomend">Bedroom End Bench</option>
+                            </optgroup>
+                            <optgroup label="Sofa">
+                                <option value="sofa_fullyupholstered">Fully Upholstered Sofa</option>
+                                <option value="sofa_woodframe">Wood-Frame Sofa</option>
+                                <option value="sofa_lshaped">L-Shaped Sectional</option>
+                                <option value="sofa_loveseat">Loveseat</option>
+                                <option value="sofa_recliner">Recliner Sofa</option>
+                            </optgroup>
+                            <optgroup label="Night Table">
+                                <option value="night_accent">Accent Night Table</option>
+                                <option value="night_squareside">Square Side Table</option>
+                                <option value="night_roundend">Round End Table</option>
+                                <option value="night_floating">Floating Nightstand</option>
+                            </optgroup>
+                            <optgroup label="Barstool">
+                                <option value="barstool_woodupholstered">Wood Upholstered Stool</option>
+                                <option value="barstool_industrialmetal">Industrial Metal Stool</option>
+                                <option value="barstool_adjustable">Adjustable Barstool</option>
+                                <option value="barstool_backless">Backless Stool</option>
+                            </optgroup>
+                            <optgroup label="Outdoor">
+                                <option value="outdoor_patiodining">Patio Dining Set</option>
+                                <option value="outdoor_wickerlounge">Wicker Lounge Chair</option>
+                                <option value="outdoor_gardenside">Garden Side Table</option>
+                                <option value="outdoor_poolside">Poolside Lounger</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 140px;">
+                        <label class="admin-label" for="tabContentVariant">Variant (item)</label>
+                        <select id="tabContentVariant" class="admin-input">
+                            <option value="valen">01 – Valen</option>
+                            <option value="aurex">02 – Aurex</option>
+                            <option value="serin">03 – Serin</option>
+                            <option value="calver">04 – Calver</option>
+                            <option value="elowen">05 – Elowen</option>
+                            <option value="ravelle">06 – Ravelle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tab-editor-tabs">
+                    <button type="button" class="tab-editor-btn active" data-tab="description">Description</button>
+                    <button type="button" class="tab-editor-btn" data-tab="specifications">Specifications</button>
+                    <button type="button" class="tab-editor-btn" data-tab="care">Care Instructions</button>
+                </div>
+                <div class="tab-editor-pane active" id="pane-description">
+                    <label class="admin-label">Description</label>
+                    <textarea class="admin-input tab-content-input" id="content-description" placeholder="Product description..."></textarea>
+                </div>
+                <div class="tab-editor-pane" id="pane-specifications">
+                    <label class="admin-label">Specifications</label>
+                    <textarea class="admin-input tab-content-input" id="content-specifications" placeholder="Dimensions, weight, material..."></textarea>
+                </div>
+                <div class="tab-editor-pane" id="pane-care">
+                    <label class="admin-label">Care instructions</label>
+                    <textarea class="admin-input tab-content-input" id="content-care" placeholder="Cleaning and care..."></textarea>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <button type="button" class="btn-save" id="saveProductData">Save for this variant</button>
+                <span id="saveStatus" style="margin-left: 1rem; color: var(--text-muted); font-size: 0.9rem;"></span>
+            </div>
+
+            <div class="admin-card admin-card-catalog-listing">
+                <h2>Catalog listing images – Lahat ng category</h2>
+                <p class="admin-desc" style="margin-bottom: 1rem;">Piliin ang category at subcategory sa baba, tapos i-set ang image URL para sa bawat item (01–06) na lumalabas sa page na iyon.</p>
+                <div class="admin-card-catalog-listing-select-wrap" style="margin-bottom: 1.25rem;">
+                    <label class="admin-label" for="catalogListingSubcategory">Category – Subcategory</label>
+                    <select id="catalogListingSubcategory" class="admin-input" style="max-width: 400px;">
+                        <optgroup label="Chair">
+                            <option value="chair_highback">Dining Chair (High-Back)</option>
+                            <option value="chair_lowback">Dining Chair (Low-Back)</option>
+                            <option value="chair_upholstered">Dining Chair (Upholstered)</option>
+                            <option value="chair_padded">Padded Dining Chair</option>
+                            <option value="chair_solhiya">Solhiya Dining Chair</option>
+                        </optgroup>
+                        <optgroup label="Bed">
+                            <option value="bed_queen">Queen Sized Bed</option>
+                            <option value="bed_king">King Sized Bed</option>
+                            <option value="bed_singleloft">Single Loft Bed</option>
+                            <option value="bed_doubledeck">Double Deck Bed</option>
+                            <option value="bed_platform">Platform Bed</option>
+                        </optgroup>
+                        <optgroup label="Center Table">
+                            <option value="center_squarecoffee">Square Coffee Table</option>
+                            <option value="center_nesting">Nesting Table Set</option>
+                            <option value="center_marbletop">Marble Top Table</option>
+                            <option value="center_oval">Oval Center Table</option>
+                        </optgroup>
+                        <optgroup label="Ottoman">
+                            <option value="ottoman_roundstorage">Round Storage Ottoman</option>
+                            <option value="ottoman_squarefabric">Square Fabric Ottoman</option>
+                            <option value="ottoman_leatherpadded">Leather Padded Ottoman</option>
+                            <option value="ottoman_bench">Bench Ottoman</option>
+                        </optgroup>
+                        <optgroup label="Table">
+                            <option value="table_acacia">Acacia Dining Table</option>
+                            <option value="table_solidwood">Solid Wood Dining Table</option>
+                            <option value="table_marble">Marble Dining Table</option>
+                            <option value="table_glass">Glass Dining Table</option>
+                            <option value="table_executive">Executive Desk</option>
+                        </optgroup>
+                        <optgroup label="Accent Chair">
+                            <option value="accent_lounge">Lounge Accent Chair</option>
+                            <option value="accent_wingback">Wingback Chair</option>
+                            <option value="accent_barrel">Barrel Chair</option>
+                            <option value="accent_slipper">Slipper Chair</option>
+                            <option value="accent_solhiya">Solhiya Accent</option>
+                        </optgroup>
+                        <optgroup label="Console Table">
+                            <option value="console_drawers">Console with Drawers</option>
+                            <option value="console_minimalist">Minimalist Entryway Table</option>
+                            <option value="console_industrial">Industrial Console</option>
+                            <option value="console_glass">Glass Console</option>
+                        </optgroup>
+                        <optgroup label="Bench">
+                            <option value="bench_paddedentry">Padded Entryway Bench</option>
+                            <option value="bench_solidwood">Solid Wood Bench</option>
+                            <option value="bench_outdoorgarden">Outdoor Garden Bench</option>
+                            <option value="bench_bedroomend">Bedroom End Bench</option>
+                        </optgroup>
+                        <optgroup label="Sofa">
+                            <option value="sofa_fullyupholstered">Fully Upholstered Sofa</option>
+                            <option value="sofa_woodframe">Wood-Frame Sofa</option>
+                            <option value="sofa_lshaped">L-Shaped Sectional</option>
+                            <option value="sofa_loveseat">Loveseat</option>
+                            <option value="sofa_recliner">Recliner Sofa</option>
+                        </optgroup>
+                        <optgroup label="Night Table">
+                            <option value="night_accent">Accent Night Table</option>
+                            <option value="night_squareside">Square Side Table</option>
+                            <option value="night_roundend">Round End Table</option>
+                            <option value="night_floating">Floating Nightstand</option>
+                        </optgroup>
+                        <optgroup label="Barstool">
+                            <option value="barstool_woodupholstered">Wood Upholstered Stool</option>
+                            <option value="barstool_industrialmetal">Industrial Metal Stool</option>
+                            <option value="barstool_adjustable">Adjustable Barstool</option>
+                            <option value="barstool_backless">Backless Stool</option>
+                        </optgroup>
+                        <optgroup label="Outdoor">
+                            <option value="outdoor_patiodining">Patio Dining Set</option>
+                            <option value="outdoor_wickerlounge">Wicker Lounge Chair</option>
+                            <option value="outdoor_gardenside">Garden Side Table</option>
+                            <option value="outdoor_poolside">Poolside Lounger</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="catalog-listing-preview-row"></div>
+                <button type="button" class="btn-save" id="saveCatalogListing">Save catalog listing images</button>
+                <span id="catalogListingStatus" style="margin-left: 1rem; color: var(--text-muted); font-size: 0.9rem;"></span>
+            </div>
+
+            <div class="admin-card admin-card-catalog-listing">
+                <h2>Product detail per design (variant) – Lahat ng category</h2>
+                <p class="admin-desc" style="margin-bottom: 1rem;">Kapag kinlick ang isang item sa grid, ibang design ang lalabas sa product detail. Piliin ang category at subcategory, tapos para sa bawat design (01–06) ilagay ang pangalan at 4 image URLs para sa gallery sa detail page.</p>
+                <div class="admin-card-catalog-listing-select-wrap" style="margin-bottom: 1.25rem;">
+                    <label class="admin-label" for="variantDetailSubcategory">Category – Subcategory</label>
+                    <select id="variantDetailSubcategory" class="admin-input" style="max-width: 400px;">
+                        <optgroup label="Chair">
+                            <option value="chair_highback">Dining Chair (High-Back)</option>
+                            <option value="chair_lowback">Dining Chair (Low-Back)</option>
+                            <option value="chair_upholstered">Dining Chair (Upholstered)</option>
+                            <option value="chair_padded">Padded Dining Chair</option>
+                            <option value="chair_solhiya">Solhiya Dining Chair</option>
+                        </optgroup>
+                        <optgroup label="Bed">
+                            <option value="bed_queen">Queen Sized Bed</option>
+                            <option value="bed_king">King Sized Bed</option>
+                            <option value="bed_singleloft">Single Loft Bed</option>
+                            <option value="bed_doubledeck">Double Deck Bed</option>
+                            <option value="bed_platform">Platform Bed</option>
+                        </optgroup>
+                        <optgroup label="Center Table">
+                            <option value="center_squarecoffee">Square Coffee Table</option>
+                            <option value="center_nesting">Nesting Table Set</option>
+                            <option value="center_marbletop">Marble Top Table</option>
+                            <option value="center_oval">Oval Center Table</option>
+                        </optgroup>
+                        <optgroup label="Ottoman">
+                            <option value="ottoman_roundstorage">Round Storage Ottoman</option>
+                            <option value="ottoman_squarefabric">Square Fabric Ottoman</option>
+                            <option value="ottoman_leatherpadded">Leather Padded Ottoman</option>
+                            <option value="ottoman_bench">Bench Ottoman</option>
+                        </optgroup>
+                        <optgroup label="Table">
+                            <option value="table_acacia">Acacia Dining Table</option>
+                            <option value="table_solidwood">Solid Wood Dining Table</option>
+                            <option value="table_marble">Marble Dining Table</option>
+                            <option value="table_glass">Glass Dining Table</option>
+                            <option value="table_executive">Executive Desk</option>
+                        </optgroup>
+                        <optgroup label="Accent Chair">
+                            <option value="accent_lounge">Lounge Accent Chair</option>
+                            <option value="accent_wingback">Wingback Chair</option>
+                            <option value="accent_barrel">Barrel Chair</option>
+                            <option value="accent_slipper">Slipper Chair</option>
+                            <option value="accent_solhiya">Solhiya Accent</option>
+                        </optgroup>
+                        <optgroup label="Console Table">
+                            <option value="console_drawers">Console with Drawers</option>
+                            <option value="console_minimalist">Minimalist Entryway Table</option>
+                            <option value="console_industrial">Industrial Console</option>
+                            <option value="console_glass">Glass Console</option>
+                        </optgroup>
+                        <optgroup label="Bench">
+                            <option value="bench_paddedentry">Padded Entryway Bench</option>
+                            <option value="bench_solidwood">Solid Wood Bench</option>
+                            <option value="bench_outdoorgarden">Outdoor Garden Bench</option>
+                            <option value="bench_bedroomend">Bedroom End Bench</option>
+                        </optgroup>
+                        <optgroup label="Sofa">
+                            <option value="sofa_fullyupholstered">Fully Upholstered Sofa</option>
+                            <option value="sofa_woodframe">Wood-Frame Sofa</option>
+                            <option value="sofa_lshaped">L-Shaped Sectional</option>
+                            <option value="sofa_loveseat">Loveseat</option>
+                            <option value="sofa_recliner">Recliner Sofa</option>
+                        </optgroup>
+                        <optgroup label="Night Table">
+                            <option value="night_accent">Accent Night Table</option>
+                            <option value="night_squareside">Square Side Table</option>
+                            <option value="night_roundend">Round End Table</option>
+                            <option value="night_floating">Floating Nightstand</option>
+                        </optgroup>
+                        <optgroup label="Barstool">
+                            <option value="barstool_woodupholstered">Wood Upholstered Stool</option>
+                            <option value="barstool_industrialmetal">Industrial Metal Stool</option>
+                            <option value="barstool_adjustable">Adjustable Barstool</option>
+                            <option value="barstool_backless">Backless Stool</option>
+                        </optgroup>
+                        <optgroup label="Outdoor">
+                            <option value="outdoor_patiodining">Patio Dining Set</option>
+                            <option value="outdoor_wickerlounge">Wicker Lounge Chair</option>
+                            <option value="outdoor_gardenside">Garden Side Table</option>
+                            <option value="outdoor_poolside">Poolside Lounger</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="variant-detail-grid" id="variantDetailGrid">
+                    <div class="variant-detail-item" data-variant-id="valen">
+                        <h3 class="variant-detail-name-label">01 – Valen</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Valen" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="valen" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="valen" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="valen" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="valen" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="valen" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="valen" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="valen" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="valen" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="valen" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="valen" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="valen" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="valen" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="valen" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="valen" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="valen" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="valen" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                    <div class="variant-detail-item" data-variant-id="aurex">
+                        <h3 class="variant-detail-name-label">02 – Aurex</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Aurex" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="aurex" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="aurex" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="aurex" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="aurex" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="aurex" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="aurex" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="aurex" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="aurex" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="aurex" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="aurex" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="aurex" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="aurex" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="aurex" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="aurex" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="aurex" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="aurex" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                    <div class="variant-detail-item" data-variant-id="serin">
+                        <h3 class="variant-detail-name-label">03 – Serin</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Serin" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="serin" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="serin" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="serin" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="serin" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="serin" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="serin" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="serin" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="serin" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="serin" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="serin" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="serin" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="serin" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="serin" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="serin" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="serin" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="serin" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                    <div class="variant-detail-item" data-variant-id="calver">
+                        <h3 class="variant-detail-name-label">04 – Calver</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Calver" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="calver" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="calver" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="calver" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="calver" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="calver" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="calver" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="calver" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="calver" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="calver" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="calver" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="calver" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="calver" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="calver" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="calver" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="calver" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="calver" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                    <div class="variant-detail-item" data-variant-id="elowen">
+                        <h3 class="variant-detail-name-label">05 – Elowen</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Elowen" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="elowen" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="elowen" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="elowen" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="elowen" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="elowen" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="elowen" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="elowen" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="elowen" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="elowen" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="elowen" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="elowen" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="elowen" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="elowen" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="elowen" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="elowen" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="elowen" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                    <div class="variant-detail-item" data-variant-id="ravelle">
+                        <h3 class="variant-detail-name-label">06 – Ravelle</h3>
+                        <label class="admin-label">Pangalan sa detail page (optional)</label>
+                        <input type="text" class="admin-input variant-detail-name" placeholder="Ravelle" />
+                        <label class="admin-label">Image 1 (main)</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="ravelle" data-img-index="0">📁 Choose</button><input type="file" class="variant-file-input" data-variant="ravelle" data-img-index="0" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="ravelle" data-img-index="0" style="display:none"/><span class="upload-status variant-upload-status" data-variant="ravelle" data-img-index="0"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="0" />
+                        <label class="admin-label">Image 2</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="ravelle" data-img-index="1">📁 Choose</button><input type="file" class="variant-file-input" data-variant="ravelle" data-img-index="1" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="ravelle" data-img-index="1" style="display:none"/><span class="upload-status variant-upload-status" data-variant="ravelle" data-img-index="1"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="1" />
+                        <label class="admin-label">Image 3</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="ravelle" data-img-index="2">📁 Choose</button><input type="file" class="variant-file-input" data-variant="ravelle" data-img-index="2" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="ravelle" data-img-index="2" style="display:none"/><span class="upload-status variant-upload-status" data-variant="ravelle" data-img-index="2"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="2" />
+                        <label class="admin-label">Image 4</label>
+                        <div class="upload-field"><button type="button" class="upload-btn variant-upload-btn" data-variant="ravelle" data-img-index="3">📁 Choose</button><input type="file" class="variant-file-input" data-variant="ravelle" data-img-index="3" accept="image/*" style="display:none"/><img class="upload-thumb variant-thumb" data-variant="ravelle" data-img-index="3" style="display:none"/><span class="upload-status variant-upload-status" data-variant="ravelle" data-img-index="3"></span></div>
+                        <input type="hidden" class="variant-detail-img" data-img-index="3" />
+                    </div>
+                </div>
+                <button type="button" class="btn-save" id="saveVariantDetails">Save product detail per design</button>
+                <span id="variantDetailStatus" style="margin-left: 1rem; color: var(--text-muted); font-size: 0.9rem;"></span>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="storage.js"></script>
+    <script>
+        // Auth guard
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+        function adminLogout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            window.location.href = 'admin-login.html';
+        }
+
+        // ── Generic upload helper – compresses to max 400px, quality 0.7 ──
+        function uploadImage(file) {
+            return new Promise(function(resolve, reject) {
+                var reader = new FileReader();
+                reader.onerror = function() { reject(new Error('Failed to read file')); };
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onerror = function() { reject(new Error('Invalid image')); };
+                    img.onload = function() {
+                        var MAX = 400;
+                        var w = img.width, h = img.height;
+                        if (w > MAX || h > MAX) {
+                            if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+                            else { w = Math.round(w * MAX / h); h = MAX; }
+                        }
+                        var canvas = document.createElement('canvas');
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ── Hero background upload ──
+        document.getElementById('homeBgFile').addEventListener('change', async function () {
+            const file = this.files[0];
+            if (!file) return;
+            const status = document.getElementById('homeBgStatus');
+            const thumb = document.getElementById('homeBgThumb');
+            status.textContent = 'Uploading...';
+            status.className = 'upload-status';
+            try {
+                const url = await uploadImage(file, '/upload/hero');
+                localStorage.setItem('furniturePampangaHomeBg', url);
+                thumb.src = url; thumb.style.display = 'inline-block';
+                status.textContent = 'Saved!';
+                status.className = 'upload-status ok';
+                if (window.syncToServer) window.syncToServer();
+            } catch (e) {
+                status.textContent = 'Error: ' + e.message;
+                status.className = 'upload-status err';
+            }
+        });
+        document.querySelector('[onclick="document.getElementById(\'homeBgFile\').click()"]')?.addEventListener('click', function() {
+            document.getElementById('homeBgFile').click();
+        });
+    </script>
+    <script>
+        var STORAGE_KEY = 'furniturePampangaProductData';
+
+        function getStoredData() {
+            try {
+                var raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function setStoredData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function setupImagePreviews() {
+            var inputs = document.querySelectorAll('.admin-image-url');
+            var boxes = document.querySelectorAll('.preview-box');
+            inputs.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var idx = parseInt(input.getAttribute('data-index'), 10);
+                    var box = document.querySelector('.preview-box[data-preview="' + idx + '"]');
+                    if (!box) return;
+                    var url = (input.value || '').trim();
+                    if (url) {
+                        box.classList.remove('empty');
+                        box.innerHTML = '<img src="' + url + '" alt="Preview" onerror="this.parentElement.classList.add(\'empty\'); this.parentElement.innerHTML=\'Invalid\';">';
+                    } else {
+                        box.classList.add('empty');
+                        box.innerHTML = 'Preview ' + (idx + 1);
+                    }
+                });
+            });
+        }
+
+        function initTabContentEditor() {
+            var tabs = document.querySelectorAll('.tab-editor-btn');
+            var panes = document.querySelectorAll('.tab-editor-pane');
+            tabs.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var tab = btn.getAttribute('data-tab');
+                    tabs.forEach(function (b) { b.classList.remove('active'); });
+                    panes.forEach(function (p) { p.classList.remove('active'); });
+                    btn.classList.add('active');
+                    var pane = document.getElementById('pane-' + tab);
+                    if (pane) pane.classList.add('active');
+                });
+            });
+        }
+
+        function loadProductIntoForm(productId) {
+            var data = getStoredData();
+            var product = data[productId] || { images: ['', '', '', ''], description: '', specifications: '', care: '' };
+            var urls = product.images || ['', '', '', ''];
+            document.querySelectorAll('.admin-image-url').forEach(function (input, i) {
+                input.value = urls[i] || '';
+            });
+            document.getElementById('content-description').value = product.description || '';
+            document.getElementById('content-specifications').value = product.specifications || '';
+            document.getElementById('content-care').value = product.care || '';
+            setupImagePreviews();
+            document.querySelectorAll('.preview-box').forEach(function (box, i) {
+                var url = urls[i];
+                if (url) {
+                    box.classList.remove('empty');
+                    box.innerHTML = '<img src="' + url + '" alt="Preview">';
+                } else {
+                    box.classList.add('empty');
+                    box.innerHTML = 'Preview ' + (i + 1);
+                }
+            });
+        }
+
+        var HOME_BG_KEY = 'furniturePampangaHomeBg';
+            function loadHomeBgIntoForm() {
+                try {
+                    var url = (localStorage.getItem(HOME_BG_KEY) || '').trim();
+                    var preview = document.getElementById('homeBgPreview');
+                    var thumb = document.getElementById('homeBgThumb');
+                    if (preview && url) {
+                        preview.classList.remove('empty');
+                        preview.innerHTML = '<img src="' + url + '" alt="">';
+                    }
+                    if (thumb && url) { thumb.src = url; thumb.style.display = 'inline-block'; }
+                } catch (e) {}
+            }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // ── Product image uploads ──
+            document.querySelectorAll('.product-upload-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var idx = btn.getAttribute('data-index');
+                    document.querySelector('.product-file-input[data-index="' + idx + '"]').click();
+                });
+            });
+            document.querySelectorAll('.product-file-input').forEach(function(input) {
+                input.addEventListener('change', async function() {
+                    var idx = input.getAttribute('data-index');
+                    var file = input.files[0];
+                    if (!file) return;
+                    var status = document.querySelector('.product-upload-status[data-index="' + idx + '"]');
+                    var thumb = document.querySelector('.product-thumb[data-index="' + idx + '"]');
+                    var hidden = document.querySelector('.admin-image-url[data-index="' + idx + '"]');
+                    var preview = document.querySelector('.preview-box[data-preview="' + idx + '"]');
+                    status.textContent = 'Uploading...';
+                    status.className = 'upload-status';
+                    try {
+                        var url = await uploadImage(file, '/upload/product');
+                        hidden.value = url;
+                        thumb.src = url; thumb.style.display = 'inline-block';
+                        if (preview) { preview.classList.remove('empty'); preview.innerHTML = '<img src="' + url + '" alt="Preview">'; }
+                        status.textContent = 'Uploaded!';
+                        status.className = 'upload-status ok';
+                    } catch(e) {
+                        status.textContent = 'Error: ' + e.message;
+                        status.className = 'upload-status err';
+                    }
+                });
+            });
+
+            initTabContentEditor();
+            function loadAllForms() {
+                loadHomeBgIntoForm();
+                loadCatalogListingIntoForm();
+                loadVariantDetailsIntoForm();
+            }
+
+
+        function getTabContentKey() {
+                var sub = document.getElementById('tabContentSubcategory');
+                var variant = document.getElementById('tabContentVariant');
+                return 'furniturePampangaTabContent_' + (sub ? sub.value : 'chair_highback') + '_' + (variant ? variant.value : 'valen');
+            }
+            function loadTabContentIntoForm() {
+                try {
+                    var raw = localStorage.getItem(getTabContentKey());
+                    var d = raw ? JSON.parse(raw) : {};
+                    document.getElementById('content-description').value = d.description || '';
+                    document.getElementById('content-specifications').value = d.specifications || '';
+                    document.getElementById('content-care').value = d.care || '';
+                } catch(e) {}
+            }
+            document.getElementById('tabContentSubcategory').addEventListener('change', loadTabContentIntoForm);
+            document.getElementById('tabContentVariant').addEventListener('change', loadTabContentIntoForm);
+            loadTabContentIntoForm();
+
+            document.getElementById('saveProductData').addEventListener('click', function () {
+                var key = getTabContentKey();
+                var d = {
+                    description: document.getElementById('content-description').value,
+                    specifications: document.getElementById('content-specifications').value,
+                    care: document.getElementById('content-care').value
+                };
+                localStorage.setItem(key, JSON.stringify(d));
+                var status = document.getElementById('saveStatus');
+                status.textContent = 'Saved.';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+                if (window.syncToServer) window.syncToServer();
+            });
+
+            var CATALOG_LISTING_PREFIX = 'furniturePampangaCatalogListing_';
+            function getCatalogListingStorageKey() {
+                var sel = document.getElementById('catalogListingSubcategory');
+                return CATALOG_LISTING_PREFIX + (sel && sel.value ? sel.value : 'chair_highback');
+            }
+            function getCatalogListingData() {
+                try {
+                    var raw = localStorage.getItem(getCatalogListingStorageKey());
+                    return raw ? JSON.parse(raw) : {};
+                } catch (e) { return {}; }
+            }
+            function setCatalogListingData(obj) {
+                try {
+                    localStorage.setItem(getCatalogListingStorageKey(), JSON.stringify(obj));
+                } catch(e) {
+                    var status = document.getElementById('catalogListingStatus');
+                    if (status) { status.textContent = 'Error: ' + (e.message || 'Storage full?'); status.style.color = '#c62828'; }
+                }
+            }
+            function updateCatalogListingPreviews() {
+                document.querySelectorAll('.catalog-listing-url').forEach(function (input) {
+                    var id = input.getAttribute('data-listing-id');
+                    var url = (input.value || '').trim();
+                    var box = document.querySelector('.catalog-listing-preview-box[data-catalog-preview="' + id + '"]');
+                    if (box) {
+                        if (url) {
+                            box.classList.remove('empty');
+                            box.innerHTML = '<img src="' + url + '" alt="" onerror="this.parentElement.classList.add(\'empty\'); this.parentElement.innerHTML=\'Invalid\';">';
+                        } else {
+                            box.classList.add('empty');
+                            box.innerHTML = 'Preview';
+                        }
+                    }
+                });
+            }
+            var NUMERIC_VARIANTS = [
+                {id:'01',label:'01'},{id:'02',label:'02'},{id:'03',label:'03'},
+                {id:'04',label:'04'},{id:'05',label:'05'},{id:'06',label:'06'}
+            ];
+            var CATALOG_LISTING_ITEMS = {
+                chair_highback: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_lowback: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_upholstered: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_padded: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_solhiya: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                bed_queen: NUMERIC_VARIANTS, bed_king: NUMERIC_VARIANTS, bed_singleloft: NUMERIC_VARIANTS, bed_doubledeck: NUMERIC_VARIANTS, bed_platform: NUMERIC_VARIANTS,
+                center_squarecoffee: NUMERIC_VARIANTS, center_nesting: NUMERIC_VARIANTS, center_marbletop: NUMERIC_VARIANTS, center_oval: NUMERIC_VARIANTS,
+                ottoman_roundstorage: NUMERIC_VARIANTS, ottoman_squarefabric: NUMERIC_VARIANTS, ottoman_leatherpadded: NUMERIC_VARIANTS, ottoman_bench: NUMERIC_VARIANTS,
+                table_acacia: NUMERIC_VARIANTS, table_solidwood: NUMERIC_VARIANTS, table_marble: NUMERIC_VARIANTS, table_glass: NUMERIC_VARIANTS, table_executive: NUMERIC_VARIANTS,
+                accent_lounge: NUMERIC_VARIANTS, accent_wingback: NUMERIC_VARIANTS, accent_barrel: NUMERIC_VARIANTS, accent_slipper: NUMERIC_VARIANTS, accent_solhiya: NUMERIC_VARIANTS,
+                console_drawers: NUMERIC_VARIANTS, console_minimalist: NUMERIC_VARIANTS, console_industrial: NUMERIC_VARIANTS, console_glass: NUMERIC_VARIANTS,
+                bench_paddedentry: NUMERIC_VARIANTS, bench_solidwood: NUMERIC_VARIANTS, bench_outdoorgarden: NUMERIC_VARIANTS, bench_bedroomend: NUMERIC_VARIANTS,
+                sofa_fullyupholstered: NUMERIC_VARIANTS, sofa_woodframe: NUMERIC_VARIANTS, sofa_lshaped: NUMERIC_VARIANTS, sofa_loveseat: NUMERIC_VARIANTS, sofa_recliner: NUMERIC_VARIANTS,
+                night_accent: NUMERIC_VARIANTS, night_squareside: NUMERIC_VARIANTS, night_roundend: NUMERIC_VARIANTS, night_floating: NUMERIC_VARIANTS,
+                barstool_woodupholstered: NUMERIC_VARIANTS, barstool_industrialmetal: NUMERIC_VARIANTS, barstool_adjustable: NUMERIC_VARIANTS, barstool_backless: NUMERIC_VARIANTS,
+                outdoor_patiodining: NUMERIC_VARIANTS, outdoor_wickerlounge: NUMERIC_VARIANTS, outdoor_gardenside: NUMERIC_VARIANTS, outdoor_poolside: NUMERIC_VARIANTS
+            };
+            function rebuildCatalogListingForm() {
+                var sel = document.getElementById('catalogListingSubcategory');
+                var key = sel ? sel.value : 'chair_highback';
+                var items = CATALOG_LISTING_ITEMS[key] || [];
+                var row = document.querySelector('.catalog-listing-preview-row');
+                if (!row) return;
+                row.innerHTML = '';
+                items.forEach(function(item) {
+                    var div = document.createElement('div');
+                    div.className = 'catalog-listing-preview-item';
+                    div.innerHTML = '<label class="admin-label">' + item.label + '</label>' +
+                        '<input type="text" class="admin-input catalog-listing-name" data-listing-id="' + item.id + '" placeholder="Item name (e.g. Valen)" style="margin-bottom:0.4rem;" />' +
+                        '<div class="preview-box catalog-listing-preview-box empty" data-catalog-preview="' + item.id + '">Preview</div>' +
+                        '<div class="upload-field">' +
+                            '<button type="button" class="upload-btn catalog-upload-btn" data-listing-id="' + item.id + '">📁 Choose Image</button>' +
+                            '<input type="file" class="catalog-file-input" data-listing-id="' + item.id + '" accept="image/*" style="display:none" />' +
+                            '<img class="upload-thumb catalog-thumb" data-listing-id="' + item.id + '" style="display:none" />' +
+                            '<span class="upload-status catalog-upload-status" data-listing-id="' + item.id + '"></span>' +
+                            '<button type="button" class="upload-btn catalog-remove-btn" data-listing-id="' + item.id + '" style="background:#c62828;display:none;">✕ Remove</button>' +
+                        '</div>' +
+                        '<input type="hidden" class="catalog-listing-url" data-listing-id="' + item.id + '" />';
+                    row.appendChild(div);
+                });
+                setupCatalogListingPreviews();
+            }
+            function loadCatalogListingIntoForm() {
+                rebuildCatalogListingForm();
+                var data = getCatalogListingData();
+                document.querySelectorAll('.catalog-listing-url').forEach(function(input) {
+                    var id = input.getAttribute('data-listing-id');
+                    var url = (data[id] ? (data[id].url || data[id] || '') : '').trim();
+                    input.value = url;
+                    var nameInput = document.querySelector('.catalog-listing-name[data-listing-id="' + id + '"]');
+                    if (nameInput) nameInput.value = (data[id] && data[id].name ? data[id].name : '').trim();
+                    var removeBtn = document.querySelector('.catalog-remove-btn[data-listing-id="' + id + '"]');
+                    if (removeBtn) removeBtn.style.display = url ? 'inline-block' : 'none';
+                });
+                updateCatalogListingPreviews();
+            }
+            function setupCatalogListingPreviews() {
+                var row = document.querySelector('.catalog-listing-preview-row');
+                if (!row) return;
+                row.querySelectorAll('.catalog-upload-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var id = btn.getAttribute('data-listing-id');
+                        row.querySelector('.catalog-file-input[data-listing-id="' + id + '"]').click();
+                    });
+                });
+                row.querySelectorAll('.catalog-file-input').forEach(function(input) {
+                    input.addEventListener('change', async function() {
+                        var id = input.getAttribute('data-listing-id');
+                        var file = input.files[0];
+                        if (!file) return;
+                        var item = row.querySelector('.catalog-listing-preview-item:has([data-listing-id="' + id + '"])');
+                        var status = row.querySelector('.catalog-upload-status[data-listing-id="' + id + '"]');
+                        var thumb = row.querySelector('.catalog-thumb[data-listing-id="' + id + '"]');
+                        var hidden = row.querySelector('.catalog-listing-url[data-listing-id="' + id + '"]');
+                        var box = row.querySelector('.catalog-listing-preview-box[data-catalog-preview="' + id + '"]');
+                        var removeBtn = row.querySelector('.catalog-remove-btn[data-listing-id="' + id + '"]');
+                        status.textContent = 'Uploading...';
+                        status.className = 'upload-status';
+                        try {
+                            var url = await uploadImage(file);
+                            hidden.value = url;
+                            thumb.src = url; thumb.style.display = 'inline-block';
+                            if (box) { box.classList.remove('empty'); box.innerHTML = '<img src="' + url + '" alt="">'; }
+                            if (removeBtn) removeBtn.style.display = 'inline-block';
+                            status.textContent = 'Uploaded!';
+                            status.className = 'upload-status ok';
+                        } catch(e) {
+                            status.textContent = 'Error: ' + e.message;
+                            status.className = 'upload-status err';
+                        }
+                    });
+                });
+                row.querySelectorAll('.catalog-remove-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var id = btn.getAttribute('data-listing-id');
+                        var hidden = row.querySelector('.catalog-listing-url[data-listing-id="' + id + '"]');
+                        var thumb = row.querySelector('.catalog-thumb[data-listing-id="' + id + '"]');
+                        var box = row.querySelector('.catalog-listing-preview-box[data-catalog-preview="' + id + '"]');
+                        var status = row.querySelector('.catalog-upload-status[data-listing-id="' + id + '"]');
+                        if (hidden) hidden.value = '';
+                        if (thumb) { thumb.src = ''; thumb.style.display = 'none'; }
+                        if (box) { box.classList.add('empty'); box.innerHTML = 'Preview'; }
+                        if (status) { status.textContent = ''; }
+                        btn.style.display = 'none';
+                    });
+                });
+            }
+            document.getElementById('saveCatalogListing').addEventListener('click', function () {
+                var data = {};
+                document.querySelectorAll('.catalog-listing-url').forEach(function (input) {
+                    var id = input.getAttribute('data-listing-id');
+                    if (!id) return;
+                    var nameInput = document.querySelector('.catalog-listing-name[data-listing-id="' + id + '"]');
+                    data[id] = {
+                        url: (input.value || '').trim(),
+                        name: (nameInput ? nameInput.value : '').trim()
+                    };
+                });
+                setCatalogListingData(data);
+                var status = document.getElementById('catalogListingStatus');
+                status.textContent = 'Saved.';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+                if (window.syncToServer) window.syncToServer();
+            });
+
+            var VARIANT_PREFIX = 'furniturePampangaCatalogVariants_';
+            function getVariantDetailKey() {
+                var sel = document.getElementById('variantDetailSubcategory');
+                return VARIANT_PREFIX + (sel && sel.value ? sel.value : 'chair_highback');
+            }
+            var VARIANT_DETAIL_ITEMS = {
+                chair_highback: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_lowback: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_upholstered: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_padded: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}],
+                chair_solhiya: [{id:'valen',label:'01 – Valen'},{id:'aurex',label:'02 – Aurex'},{id:'serin',label:'03 – Serin'},{id:'calver',label:'04 – Calver'},{id:'elowen',label:'05 – Elowen'},{id:'ravelle',label:'06 – Ravelle'}]
+            };
+            function getVariantItems() {
+                var sel = document.getElementById('variantDetailSubcategory');
+                var key = sel ? sel.value : 'chair_highback';
+                if (VARIANT_DETAIL_ITEMS[key]) return VARIANT_DETAIL_ITEMS[key];
+                // For non-chair: use CATALOG_LISTING_ITEMS
+                return CATALOG_LISTING_ITEMS[key] || [];
+            }
+            function rebuildVariantDetailForm() {
+                var grid = document.getElementById('variantDetailGrid');
+                if (!grid) return;
+                var items = getVariantItems();
+                grid.innerHTML = '';
+                items.forEach(function(item) {
+                    var div = document.createElement('div');
+                    div.className = 'variant-detail-item';
+                    div.setAttribute('data-variant-id', item.id);
+                    var html = '<h3 class="variant-detail-name-label">' + item.label + '</h3>' +
+                        '<label class="admin-label">Pangalan sa detail page (optional)</label>' +
+                        '<input type="text" class="admin-input variant-detail-name" placeholder="' + item.label.replace(/^\d+ – /, '') + '" />';
+                    [0,1,2,3].forEach(function(idx) {
+                        html += '<label class="admin-label">Image ' + (idx+1) + (idx===0?' (main)':'') + '</label>' +
+                            '<div class="upload-field">' +
+                                '<button type="button" class="upload-btn variant-upload-btn" data-variant="' + item.id + '" data-img-index="' + idx + '">📁 Choose</button>' +
+                                '<input type="file" class="variant-file-input" data-variant="' + item.id + '" data-img-index="' + idx + '" accept="image/*" style="display:none"/>' +
+                                '<img class="upload-thumb variant-thumb" data-variant="' + item.id + '" data-img-index="' + idx + '" style="display:none"/>' +
+                                '<span class="upload-status variant-upload-status" data-variant="' + item.id + '" data-img-index="' + idx + '"></span>' +
+                                '<button type="button" class="upload-btn variant-remove-btn" data-variant="' + item.id + '" data-img-index="' + idx + '" style="background:#c62828;display:none;">✕ Remove</button>' +
+                            '</div>' +
+                            '<input type="hidden" class="variant-detail-img" data-img-index="' + idx + '" />';
+                    });
+                    div.innerHTML = html;
+                    grid.appendChild(div);
+                });
+                // re-attach upload listeners
+                grid.querySelectorAll('.variant-upload-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var v = btn.getAttribute('data-variant'), i = btn.getAttribute('data-img-index');
+                        grid.querySelector('.variant-file-input[data-variant="'+v+'"][data-img-index="'+i+'"]').click();
+                    });
+                });
+                grid.querySelectorAll('.variant-file-input').forEach(function(input) {
+                    input.addEventListener('change', async function() {
+                        var v = input.getAttribute('data-variant'), i = input.getAttribute('data-img-index');
+                        var file = input.files[0]; if (!file) return;
+                        var block = grid.querySelector('.variant-detail-item[data-variant-id="'+v+'"]');
+                        var status = block.querySelector('.variant-upload-status[data-img-index="'+i+'"]');
+                        var thumb = block.querySelector('.variant-thumb[data-img-index="'+i+'"]');
+                        var hidden = block.querySelector('.variant-detail-img[data-img-index="'+i+'"]');
+                        var removeBtn = block.querySelector('.variant-remove-btn[data-img-index="'+i+'"]');
+                        status.textContent = 'Uploading...'; status.className = 'upload-status';
+                        try {
+                            var url = await uploadImage(file, '/upload/variant');
+                            hidden.value = url;
+                            thumb.src = url; thumb.style.display = 'inline-block';
+                            if (removeBtn) removeBtn.style.display = 'inline-block';
+                            status.textContent = 'Uploaded!'; status.className = 'upload-status ok';
+                        } catch(e) { status.textContent = 'Error: '+e.message; status.className = 'upload-status err'; }
+                    });
+                });
+                grid.querySelectorAll('.variant-remove-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var v = btn.getAttribute('data-variant'), i = btn.getAttribute('data-img-index');
+                        var block = grid.querySelector('.variant-detail-item[data-variant-id="'+v+'"]');
+                        var hidden = block.querySelector('.variant-detail-img[data-img-index="'+i+'"]');
+                        var thumb = block.querySelector('.variant-thumb[data-img-index="'+i+'"]');
+                        var status = block.querySelector('.variant-upload-status[data-img-index="'+i+'"]');
+                        if (hidden) hidden.value = '';
+                        if (thumb) { thumb.src = ''; thumb.style.display = 'none'; }
+                        if (status) status.textContent = '';
+                        btn.style.display = 'none';
+                    });
+                });
+            }
+            function loadVariantDetailsIntoForm() {
+                rebuildVariantDetailForm();
+                try {
+                    var raw = localStorage.getItem(getVariantDetailKey());
+                    var data = raw ? JSON.parse(raw) : {};
+                    getVariantItems().forEach(function(item) {
+                        var block = document.querySelector('.variant-detail-item[data-variant-id="'+item.id+'"]');
+                        if (!block) return;
+                        var saved = data[item.id] || {};
+                        var nameInput = block.querySelector('.variant-detail-name');
+                        if (nameInput) nameInput.value = (saved.name || '').trim();
+                        [0,1,2,3].forEach(function(idx) {
+                            var hidden = block.querySelector('.variant-detail-img[data-img-index="'+idx+'"]');
+                            var thumb = block.querySelector('.variant-thumb[data-img-index="'+idx+'"]');
+                            var removeBtn = block.querySelector('.variant-remove-btn[data-img-index="'+idx+'"]');
+                            var url = ((saved.images||[])[idx]||'').trim();
+                            if (hidden) hidden.value = url;
+                            if (thumb && url) { thumb.src = url; thumb.style.display = 'inline-block'; }
+                            if (removeBtn) removeBtn.style.display = url ? 'inline-block' : 'none';
+                        });
+                    });
+                } catch(e) {}
+            }
+            document.getElementById('catalogListingSubcategory').addEventListener('change', loadCatalogListingIntoForm);
+            document.getElementById('variantDetailSubcategory').addEventListener('change', loadVariantDetailsIntoForm);
+            if (window.runWhenStorageReady) {
+                window.runWhenStorageReady(loadAllForms);
+            } else {
+                loadAllForms();
+            }
+            document.getElementById('saveVariantDetails').addEventListener('click', function () {
+                var data = {};
+                document.querySelectorAll('.variant-detail-item').forEach(function (block) {
+                    var id = block.getAttribute('data-variant-id');
+                    if (!id) return;
+                    var nameInput = block.querySelector('.variant-detail-name');
+                    var imgs = [];
+                    block.querySelectorAll('.variant-detail-img').forEach(function (input) {
+                        imgs.push((input.value || '').trim());
+                    });
+                    data[id] = { name: (nameInput ? nameInput.value : '').trim(), images: imgs };
+                });
+                var status = document.getElementById('variantDetailStatus');
+                try {
+                    localStorage.setItem(getVariantDetailKey(), JSON.stringify(data));
+                    status.textContent = 'Saved.';
+                    setTimeout(function () { status.textContent = ''; }, 2000);
+                    if (window.syncToServer) window.syncToServer();
+                } catch (e) {
+                    status.textContent = 'Error saving: ' + (e.message || 'Storage full?');
+                    status.style.color = '#c62828';
+                }
+            });
+
+            var EXPORT_PREFIX = 'furniturePampanga';
+            function exportImageData() {
+                var out = {};
+                try {
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        if (key && key.indexOf(EXPORT_PREFIX) === 0) {
+                            out[key] = localStorage.getItem(key);
+                        }
+                    }
+                    var json = JSON.stringify(out, null, 2);
+                    var blob = new Blob([json], { type: 'application/json' });
+                    var a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'furniture-pampanga-image-data.json';
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                    var status = document.getElementById('exportImportStatus');
+                    if (status) { status.textContent = 'Na-download na ang file.'; setTimeout(function () { status.textContent = ''; }, 3000); }
+                } catch (e) {
+                    var status = document.getElementById('exportImportStatus');
+                    if (status) status.textContent = 'Error: ' + (e.message || 'Export failed');
+                }
+            }
+            function importImageData() {
+                var input = document.getElementById('importFileInput');
+                if (!input) return;
+                input.click();
+            }
+            var exportBtn = document.getElementById('exportImageData');
+            var importBtn = document.getElementById('importImageData');
+            var importInput = document.getElementById('importFileInput');
+            if (exportBtn) exportBtn.addEventListener('click', exportImageData);
+            if (importBtn) importBtn.addEventListener('click', importImageData);
+            if (importInput) importInput.addEventListener('change', function () {
+                var input = this;
+                var file = input.files && input.files[0];
+                if (!file) return;
+                var status = document.getElementById('exportImportStatus');
+                var reader = new FileReader();
+                reader.onload = function () {
+                    try {
+                        var data = JSON.parse(reader.result);
+                        if (data && typeof data === 'object') {
+                            var count = 0;
+                            for (var key in data) {
+                                if (data.hasOwnProperty(key) && key.indexOf(EXPORT_PREFIX) === 0) {
+                                    localStorage.setItem(key, data[key]);
+                                    count++;
+                                }
+                            }
+                            if (status) {
+                                status.textContent = 'Na-import na. ' + count + ' item(s). I-refresh ang page o buksan ang Catalog/Product para makita ang images.';
+                                setTimeout(function () { status.textContent = ''; }, 5000);
+                            }
+                            loadHomeBgIntoForm();
+                            loadCatalogListingIntoForm();
+                            loadVariantDetailsIntoForm();
+                        } else {
+                            if (status) status.textContent = 'Invalid file format.';
+                        }
+                    } catch (e) {
+                        if (status) status.textContent = 'Error: ' + (e.message || 'Invalid JSON');
+                    }
+                    input.value = '';
+                };
+                reader.readAsText(file);
+            });
+        });
+    </script>
+
+
+    <style>
+        .cat-manager-item { background: var(--bg-light,#faf8f5); border: 1px solid var(--border-color,#e8e0d5); border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+        .cat-manager-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.4rem; }
+        .cat-manager-subs { display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center; margin-bottom:0.5rem; }
+        .cat-sub-tag { background:#e8e0d5; border-radius:20px; padding:0.2rem 0.6rem; font-size:0.82rem; display:flex; align-items:center; gap:0.3rem; }
+        .cat-sub-del { background:none; border:none; cursor:pointer; color:#c62828; font-size:0.8rem; padding:0; line-height:1; }
+        .cat-add-sub-row { display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-top:0.6rem; }
+        .finish-manager-item { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0; border-bottom:1px solid var(--border-color,#e8e0d5); flex-wrap:wrap; }
+        .finish-manager-item:last-child { border-bottom:none; }
+        .fabric-swatches-row { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:flex-start; margin-bottom:0.5rem; }
+        .fabric-swatch-item { display:flex; flex-direction:column; align-items:center; gap:0.2rem; position:relative; }
+        .fabric-swatch-item .cat-sub-del { position:absolute; top:-4px; right:-4px; background:#c62828; color:#fff; border-radius:50%; width:16px; height:16px; font-size:10px; display:flex; align-items:center; justify-content:center; }
+        .finish-img-preview { width:40px; height:40px; object-fit:cover; border-radius:4px; border:1px solid var(--border-color,#e8e0d5); display:none; }
+    </style>
+
+    <script>
+    function escH(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+   
+    // ── About Page Images ──
+    (function(){
+        var container = document.querySelector('.admin-container');
+        if (!container) return;
+        var card = document.createElement('div');
+        card.className = 'admin-card';
+        card.id = 'aboutImagesCard';
+        var items = [
+            { id:'aboutHero',   key:'furniturePampangaAboutHero',   label:'Hero / Banner background' },
+            { id:'aboutBlock1', key:'furniturePampangaAboutBlock1',  label:'Section 1 – Furniture Design' },
+            { id:'aboutBlock2', key:'furniturePampangaAboutBlock2',  label:'Section 2 – Craftsmanship' },
+            { id:'aboutBlock3', key:'furniturePampangaAboutBlock3',  label:'Section 3 – Quality & Comfort' }
+        ];
+        card.innerHTML =
+            '<h2>🖼️ About page images</h2>' +
+            '<p class="admin-desc">I-upload ang images para sa About page sections.</p>' +
+            items.map(function(item){
+                return '<label class="admin-label">' + item.label + '</label>' +
+                    '<div class="upload-field">' +
+                        '<button type="button" class="upload-btn about-upload-btn" data-about-id="' + item.id + '">📁 Choose Image</button>' +
+                        '<input type="file" class="about-file" data-about-id="' + item.id + '" accept="image/*" style="display:none" />' +
+                        '<img class="upload-thumb about-thumb" data-about-id="' + item.id + '" style="display:none" />' +
+                        '<span class="upload-status about-status" data-about-id="' + item.id + '"></span>' +
+                    '</div>';
+            }).join('') +
+            '<div class="admin-card-footer">' +
+                '<button type="button" class="btn-save" id="saveAboutImages">💾 Save About Images</button>' +
+                '<span class="admin-status-msg" id="aboutSaveStatus"></span>' +
+            '</div>';
+        var firstCard = container.querySelector('.admin-card');
+        container.insertBefore(card, firstCard);
+
+        // load saved thumbs
+        items.forEach(function(item){
+            var saved = (localStorage.getItem(item.key)||'').trim();
+            var thumb = card.querySelector('.about-thumb[data-about-id="'+item.id+'"]');
+            if (saved && thumb){ thumb.src = saved; thumb.style.display = 'inline-block'; }
+            var fileInput = card.querySelector('.about-file[data-about-id="'+item.id+'"]');
+            var btn = card.querySelector('.about-upload-btn[data-about-id="'+item.id+'"]');
+            var status = card.querySelector('.about-status[data-about-id="'+item.id+'"]');
+            btn.addEventListener('click', function(){ fileInput.click(); });
+            fileInput.addEventListener('change', async function(){
+                var file = fileInput.files[0]; if (!file) return;
+                status.textContent = 'Uploading...'; status.className = 'upload-status';
+                try {
+                    var url = await uploadImage(file, '/upload/hero');
+                    localStorage.setItem(item.key, url);
+                    thumb.src = url; thumb.style.display = 'inline-block';
+                    status.textContent = '✓ Uploaded'; status.className = 'upload-status ok';
+                } catch(e){ status.textContent = 'Error: '+e.message; status.className = 'upload-status err'; }
+            });
+        });
+
+        document.getElementById('saveAboutImages').addEventListener('click', function(){
+            var msg = document.getElementById('aboutSaveStatus');
+            if (window.syncToServer){
+                msg.textContent = 'Saving...'; msg.className = 'admin-status-msg';
+                window.syncToServer().then(function(){
+                    msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                    setTimeout(function(){ msg.textContent = ''; }, 3000);
+                });
+            } else {
+                msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                setTimeout(function(){ msg.textContent = ''; }, 3000);
+            }
+        });
+    })();
+
+    // ── Category & Item Manager ──
+    (function(){
+        var container = document.querySelector('.admin-container');
+        if (!container) return;
+        var card = document.createElement('div');
+        card.className = 'admin-card';
+        card.innerHTML =
+            '<h2>📂 Category & Item Manager</h2>' +
+            '<p class="admin-desc">Mag-add ng bagong category (may thumbnail image) at subcategory/items. Lalabas ito sa catalog.</p>' +
+            '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">' +
+                '<input type="text" id="newCategoryName" class="admin-input" placeholder="Bagong category name..." style="max-width:200px;margin-bottom:0;" />' +
+                '<button type="button" class="upload-btn" id="newCatImgBtn">📁 Category image</button>' +
+                '<input type="file" id="newCatImgFile" accept="image/*" style="display:none" />' +
+                '<img id="newCatImgThumb" class="upload-thumb" style="display:none" />' +
+                '<span class="upload-status" id="newCatImgStatus"></span>' +
+            '</div>' +
+            '<input type="hidden" id="newCatImgUrl" />' +
+            '<div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:1.25rem;">' +
+                '<button type="button" class="btn-save" id="addCategoryBtn">+ Add Category</button>' +
+            '</div>' +
+            '<div id="categoryList"></div>' +
+            '<div class="admin-card-footer">' +
+                '<button type="button" class="btn-save" id="saveCategoriesBtn">💾 Save Categories</button>' +
+                '<span class="admin-status-msg" id="catSaveStatus"></span>' +
+            '</div>';
+        container.appendChild(card);
+
+        var CAT_KEY = 'furniturePampangaCustomCategories';
+        function getCats(){ try{ return JSON.parse(localStorage.getItem(CAT_KEY)||'[]'); }catch(e){ return []; } }
+        function saveCats(arr){ localStorage.setItem(CAT_KEY, JSON.stringify(arr)); }
+
+        document.getElementById('newCatImgBtn').addEventListener('click', function(){ document.getElementById('newCatImgFile').click(); });
+        document.getElementById('newCatImgFile').addEventListener('change', async function(){
+            var file = this.files[0]; if (!file) return;
+            var status = document.getElementById('newCatImgStatus');
+            var thumb = document.getElementById('newCatImgThumb');
+            status.textContent = 'Uploading...'; status.className = 'upload-status';
+            try {
+                var url = await uploadImage(file, '/upload/catalog');
+                document.getElementById('newCatImgUrl').value = url;
+                thumb.src = url; thumb.style.display = 'inline-block';
+                status.textContent = '✓ Ready'; status.className = 'upload-status ok';
+            } catch(e){ status.textContent = 'Error: '+e.message; status.className = 'upload-status err'; }
+        });
+
+        document.getElementById('addCategoryBtn').addEventListener('click', function(){
+            var name = (document.getElementById('newCategoryName').value||'').trim(); if (!name) return;
+            var imgUrl = (document.getElementById('newCatImgUrl').value||'').trim();
+            var arr = getCats(); arr.push({ name:name, img:imgUrl, subs:[] }); saveCats(arr);
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('newCatImgUrl').value = '';
+            document.getElementById('newCatImgThumb').style.display = 'none';
+            document.getElementById('newCatImgStatus').textContent = '';
+            renderCats();
+        });
+
+        document.getElementById('saveCategoriesBtn').addEventListener('click', function(){
+            var msg = document.getElementById('catSaveStatus');
+            if (window.syncToServer){
+                msg.textContent = 'Saving...'; msg.className = 'admin-status-msg';
+                window.syncToServer().then(function(){
+                    msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                    setTimeout(function(){ msg.textContent = ''; }, 3000);
+                });
+            } else {
+                msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                setTimeout(function(){ msg.textContent = ''; }, 3000);
+            }
+        });
+
+        function renderCats(){
+            var cats = getCats();
+            var list = document.getElementById('categoryList');
+            list.innerHTML = '';
+            if (!cats.length){ list.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Walang custom category pa.</p>'; return; }
+            cats.forEach(function(cat, ci){
+                var div = document.createElement('div');
+                div.className = 'cat-manager-item';
+                div.innerHTML =
+                    '<div class="cat-manager-header">' +
+                        (cat.img ? '<img src="'+escH(cat.img)+'" style="width:48px;height:48px;object-fit:cover;border-radius:6px;border:1px solid #e5e5e5;" />' : '') +
+                        '<strong style="flex:1;margin-left:0.5rem;">'+escH(cat.name)+'</strong>' +
+                        '<button class="upload-btn" style="font-size:0.78rem;padding:0.25rem 0.6rem;" data-cat-img-btn="'+ci+'">📁 Change image</button>' +
+                        '<input type="file" class="cat-img-file" data-ci="'+ci+'" accept="image/*" style="display:none" />' +
+                        '<span class="upload-status cat-img-status" data-ci="'+ci+'"></span>' +
+                        '<button class="upload-btn" style="background:#c62828;padding:0.3rem 0.7rem;font-size:0.78rem;" data-del-cat="'+ci+'">✕ Remove</button>' +
+                    '</div>' +
+                    '<div class="cat-manager-subs">' +
+                        (cat.subs||[]).map(function(sub,si){
+                            return '<span class="cat-sub-tag">'+escH(sub)+' <button class="cat-sub-del" data-ci="'+ci+'" data-si="'+si+'">✕</button></span>';
+                        }).join('') +
+                    '</div>' +
+                    '<div class="cat-add-sub-row">' +
+                        '<input type="text" class="admin-input cat-sub-input" data-ci="'+ci+'" placeholder="Add subcategory/item..." style="max-width:200px;padding:0.3rem 0.6rem;font-size:0.85rem;margin-bottom:0;" />' +
+                        '<button class="upload-btn cat-add-sub-btn" data-ci="'+ci+'" style="padding:0.3rem 0.8rem;font-size:0.85rem;">+ Add item</button>' +
+                    '</div>';
+                list.appendChild(div);
+            });
+            list.querySelectorAll('[data-cat-img-btn]').forEach(function(btn){
+                btn.addEventListener('click', function(){ list.querySelector('.cat-img-file[data-ci="'+btn.getAttribute('data-cat-img-btn')+'"]').click(); });
+            });
+            list.querySelectorAll('.cat-img-file').forEach(function(input){
+                input.addEventListener('change', async function(){
+                    var ci = parseInt(input.getAttribute('data-ci'));
+                    var file = input.files[0]; if (!file) return;
+                    var status = list.querySelector('.cat-img-status[data-ci="'+ci+'"]');
+                    status.textContent = 'Uploading...'; status.className = 'upload-status';
+                    try {
+                        var url = await uploadImage(file, '/upload/catalog');
+                        var arr = getCats(); arr[ci].img = url; saveCats(arr);
+                        status.textContent = '✓ Updated'; status.className = 'upload-status ok';
+                        renderCats();
+                    } catch(e){ status.textContent = 'Error'; status.className = 'upload-status err'; }
+                });
+            });
+            list.querySelectorAll('[data-del-cat]').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var arr = getCats(); arr.splice(parseInt(btn.getAttribute('data-del-cat')),1); saveCats(arr); renderCats();
+                });
+            });
+            list.querySelectorAll('.cat-sub-del').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var ci=parseInt(btn.getAttribute('data-ci')), si=parseInt(btn.getAttribute('data-si'));
+                    var arr=getCats(); arr[ci].subs.splice(si,1); saveCats(arr); renderCats();
+                });
+            });
+            list.querySelectorAll('.cat-add-sub-btn').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var ci=parseInt(btn.getAttribute('data-ci'));
+                    var input=list.querySelector('.cat-sub-input[data-ci="'+ci+'"]');
+                    var val=(input?input.value:'').trim(); if(!val) return;
+                    var arr=getCats(); arr[ci].subs=arr[ci].subs||[]; arr[ci].subs.push(val); saveCats(arr); renderCats();
+                });
+            });
+        }
+        renderCats();
+    })();
+
+    // ── Finish Manager ──
+    (function(){
+        var container = document.querySelector('.admin-container');
+        if (!container) return;
+        var card = document.createElement('div');
+        card.className = 'admin-card';
+        card.innerHTML =
+            '<h2>🎨 Finish Manager</h2>' +
+            '<p class="admin-desc">Mag-add ng bagong finish. Pwedeng color swatch o image (e.g. wood texture photo).</p>' +
+            '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">' +
+                '<input type="text" id="newFinishName" class="admin-input" placeholder="Finish name (e.g. Sage Green)" style="max-width:200px;margin-bottom:0;" />' +
+                '<input type="color" id="newFinishColor" value="#cccccc" title="Pick color" style="width:44px;height:38px;border:1px solid var(--border-color,#e5e5e5);border-radius:5px;cursor:pointer;padding:2px;" />' +
+                '<button type="button" class="upload-btn" id="newFinishImgBtn">📁 Upload image (optional)</button>' +
+                '<input type="file" id="newFinishImgFile" accept="image/*" style="display:none" />' +
+                '<img id="newFinishImgThumb" class="upload-thumb" style="display:none" />' +
+                '<span class="upload-status" id="newFinishImgStatus"></span>' +
+            '</div>' +
+            '<input type="hidden" id="newFinishImgUrl" />' +
+            '<div style="margin-bottom:1.25rem;">' +
+                '<button type="button" class="btn-save" id="addFinishBtn">+ Add Finish</button>' +
+            '</div>' +
+            '<div id="finishList"></div>' +
+            '<div class="admin-card-footer">' +
+                '<button type="button" class="btn-save" id="saveFinishesBtn">💾 Save Finishes</button>' +
+                '<span class="admin-status-msg" id="finishSaveStatus"></span>' +
+            '</div>';
+        container.appendChild(card);
+
+        var FINISH_KEY = 'furniturePampangaCustomFinishes';
+        function getFinishes(){ try{ return JSON.parse(localStorage.getItem(FINISH_KEY)||'[]'); }catch(e){ return []; } }
+        function saveFinishes(arr){ localStorage.setItem(FINISH_KEY, JSON.stringify(arr)); }
+
+        document.getElementById('newFinishImgBtn').addEventListener('click', function(){ document.getElementById('newFinishImgFile').click(); });
+        document.getElementById('newFinishImgFile').addEventListener('change', async function(){
+            var file = this.files[0]; if (!file) return;
+            var status = document.getElementById('newFinishImgStatus');
+            var thumb = document.getElementById('newFinishImgThumb');
+            status.textContent = 'Uploading...'; status.className = 'upload-status';
+            try {
+                var url = await uploadImage(file, '/upload/catalog');
+                document.getElementById('newFinishImgUrl').value = url;
+                thumb.src = url; thumb.style.display = 'inline-block';
+                status.textContent = '✓ Ready'; status.className = 'upload-status ok';
+            } catch(e){ status.textContent = 'Error: '+e.message; status.className = 'upload-status err'; }
+        });
+
+        document.getElementById('addFinishBtn').addEventListener('click', function(){
+            var name = (document.getElementById('newFinishName').value||'').trim(); if (!name) return;
+            var color = document.getElementById('newFinishColor').value || '#cccccc';
+            var img = (document.getElementById('newFinishImgUrl').value||'').trim();
+            var arr = getFinishes(); arr.push({ name:name, color:color, img:img }); saveFinishes(arr);
+            document.getElementById('newFinishName').value = '';
+            document.getElementById('newFinishImgUrl').value = '';
+            document.getElementById('newFinishImgThumb').style.display = 'none';
+            document.getElementById('newFinishImgStatus').textContent = '';
+            renderFinishes();
+        });
+
+        document.getElementById('saveFinishesBtn').addEventListener('click', function(){
+            var msg = document.getElementById('finishSaveStatus');
+            if (window.syncToServer){
+                msg.textContent = 'Saving...'; msg.className = 'admin-status-msg';
+                window.syncToServer().then(function(){
+                    msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                    setTimeout(function(){ msg.textContent = ''; }, 3000);
+                });
+            } else {
+                msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                setTimeout(function(){ msg.textContent = ''; }, 3000);
+            }
+        });
+
+        function renderFinishes(){
+            var finishes = getFinishes();
+            var list = document.getElementById('finishList');
+            list.innerHTML = '';
+            if (!finishes.length){ list.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Walang custom finish pa.</p>'; return; }
+            finishes.forEach(function(f, i){
+                var div = document.createElement('div');
+                div.className = 'finish-manager-item';
+                div.innerHTML =
+                    (f.img
+                        ? '<img src="'+escH(f.img)+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #e5e5e5;" />'
+                        : '<div style="width:32px;height:32px;border-radius:4px;border:1px solid #ccc;background:'+escH(f.color)+';flex-shrink:0;"></div>') +
+                    '<span style="flex:1;font-weight:500;">'+escH(f.name)+'</span>' +
+                    '<button class="upload-btn" style="font-size:0.78rem;padding:0.25rem 0.6rem;" data-finish-img-btn="'+i+'">📁 Change image</button>' +
+                    '<input type="file" class="finish-img-file" data-fi="'+i+'" accept="image/*" style="display:none" />' +
+                    '<span class="upload-status finish-img-status" data-fi="'+i+'"></span>' +
+                    '<button class="upload-btn" style="background:#c62828;padding:0.25rem 0.6rem;font-size:0.78rem;" data-del-finish="'+i+'">✕</button>';
+                list.appendChild(div);
+            });
+            list.querySelectorAll('[data-finish-img-btn]').forEach(function(btn){
+                btn.addEventListener('click', function(){ list.querySelector('.finish-img-file[data-fi="'+btn.getAttribute('data-finish-img-btn')+'"]').click(); });
+            });
+            list.querySelectorAll('.finish-img-file').forEach(function(input){
+                input.addEventListener('change', async function(){
+                    var fi = parseInt(input.getAttribute('data-fi'));
+                    var file = input.files[0]; if (!file) return;
+                    var status = list.querySelector('.finish-img-status[data-fi="'+fi+'"]');
+                    status.textContent = 'Uploading...'; status.className = 'upload-status';
+                    try {
+                        var url = await uploadImage(file, '/upload/catalog');
+                        var arr = getFinishes(); arr[fi].img = url; saveFinishes(arr);
+                        status.textContent = '✓ Updated'; status.className = 'upload-status ok';
+                        renderFinishes();
+                    } catch(e){ status.textContent = 'Error'; status.className = 'upload-status err'; }
+                });
+            });
+            list.querySelectorAll('[data-del-finish]').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var arr = getFinishes(); arr.splice(parseInt(btn.getAttribute('data-del-finish')),1); saveFinishes(arr); renderFinishes();
+                });
+            });
+        }
+        renderFinishes();
+    })();
+
+    // ── Fabric / Material Manager ──
+    (function(){
+        var container = document.querySelector('.admin-container');
+        if (!container) return;
+        var card = document.createElement('div');
+        card.className = 'admin-card';
+        card.innerHTML =
+            '<h2>🧵 Fabric / Material Manager</h2>' +
+            '<p class="admin-desc">Mag-add ng bagong fabric group (e.g. Velvet, Linen) at i-upload ang swatch images nito.</p>' +
+            '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1.25rem;">' +
+                '<input type="text" id="newFabricGroupName" class="admin-input" placeholder="Group name (e.g. Velvet)" style="max-width:220px;margin-bottom:0;" />' +
+                '<button type="button" class="btn-save" id="addFabricGroupBtn">+ Add Group</button>' +
+            '</div>' +
+            '<div id="fabricList"></div>' +
+            '<div class="admin-card-footer">' +
+                '<button type="button" class="btn-save" id="saveFabricsBtn">💾 Save Fabrics</button>' +
+                '<span class="admin-status-msg" id="fabricSaveStatus"></span>' +
+            '</div>';
+        container.appendChild(card);
+
+        var FABRIC_KEY = 'furniturePampangaCustomFabrics';
+        function getFabrics(){ try{ return JSON.parse(localStorage.getItem(FABRIC_KEY)||'[]'); }catch(e){ return []; } }
+        function saveFabrics(arr){ localStorage.setItem(FABRIC_KEY, JSON.stringify(arr)); }
+
+        document.getElementById('addFabricGroupBtn').addEventListener('click', function(){
+            var input = document.getElementById('newFabricGroupName');
+            var val = (input.value||'').trim(); if (!val) return;
+            var arr = getFabrics(); arr.push({ name:val, swatches:[] }); saveFabrics(arr);
+            input.value = ''; renderFabrics();
+        });
+
+        document.getElementById('saveFabricsBtn').addEventListener('click', function(){
+            var msg = document.getElementById('fabricSaveStatus');
+            if (window.syncToServer){
+                msg.textContent = 'Saving...'; msg.className = 'admin-status-msg';
+                window.syncToServer().then(function(){
+                    msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                    setTimeout(function(){ msg.textContent = ''; }, 3000);
+                });
+            } else {
+                msg.textContent = '✓ Saved!'; msg.className = 'admin-status-msg ok';
+                setTimeout(function(){ msg.textContent = ''; }, 3000);
+            }
+        });
+
+        function renderFabrics(){
+            var fabrics = getFabrics();
+            var list = document.getElementById('fabricList');
+            list.innerHTML = '';
+            if (!fabrics.length){ list.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Walang custom fabric/material pa.</p>'; return; }
+            fabrics.forEach(function(group, gi){
+                var div = document.createElement('div');
+                div.className = 'cat-manager-item';
+                div.innerHTML =
+                    '<div class="cat-manager-header">' +
+                        '<strong>'+escH(group.name)+'</strong>' +
+                        '<button class="upload-btn" style="background:#c62828;padding:0.3rem 0.7rem;font-size:0.78rem;" data-del-fabric-group="'+gi+'">✕ Remove group</button>' +
+                    '</div>' +
+                    '<div class="fabric-swatches-row">' +
+                        (group.swatches||[]).map(function(sw,si){
+                            return '<div class="fabric-swatch-item">' +
+                                '<img src="'+escH(sw.url)+'" style="width:48px;height:48px;object-fit:cover;border-radius:4px;border:1px solid #e5e5e5;" />' +
+                                '<span style="font-size:0.72rem;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;">'+escH(sw.name)+'</span>' +
+                                '<button class="cat-sub-del" data-gi="'+gi+'" data-si="'+si+'">✕</button>' +
+                            '</div>';
+                        }).join('') +
+                    '</div>' +
+                    '<div class="cat-add-sub-row">' +
+                        '<input type="text" class="admin-input fabric-swatch-name" data-gi="'+gi+'" placeholder="Swatch name..." style="max-width:160px;padding:0.3rem 0.6rem;font-size:0.85rem;margin-bottom:0;" />' +
+                        '<button class="upload-btn fabric-swatch-upload-btn" data-gi="'+gi+'" style="padding:0.3rem 0.8rem;font-size:0.85rem;">📁 Upload swatch</button>' +
+                        '<input type="file" class="fabric-swatch-file" data-gi="'+gi+'" accept="image/*" style="display:none" />' +
+                        '<span class="upload-status fabric-swatch-status" data-gi="'+gi+'"></span>' +
+                    '</div>';
+                list.appendChild(div);
+            });
+            list.querySelectorAll('[data-del-fabric-group]').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var arr=getFabrics(); arr.splice(parseInt(btn.getAttribute('data-del-fabric-group')),1); saveFabrics(arr); renderFabrics();
+                });
+            });
+            list.querySelectorAll('.cat-sub-del[data-gi]').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var gi=parseInt(btn.getAttribute('data-gi')), si=parseInt(btn.getAttribute('data-si'));
+                    var arr=getFabrics(); arr[gi].swatches.splice(si,1); saveFabrics(arr); renderFabrics();
+                });
+            });
+            list.querySelectorAll('.fabric-swatch-upload-btn').forEach(function(btn){
+                btn.addEventListener('click', function(){ list.querySelector('.fabric-swatch-file[data-gi="'+btn.getAttribute('data-gi')+'"]').click(); });
+            });
+            list.querySelectorAll('.fabric-swatch-file').forEach(function(input){
+                input.addEventListener('change', async function(){
+                    var gi=parseInt(input.getAttribute('data-gi'));
+                    var file=input.files[0]; if(!file) return;
+                    var nameInput=list.querySelector('.fabric-swatch-name[data-gi="'+gi+'"]');
+                    var swatchName=(nameInput?nameInput.value:'').trim()||file.name.replace(/\.[^.]+$/,'');
+                    var status=list.querySelector('.fabric-swatch-status[data-gi="'+gi+'"]');
+                    status.textContent='Uploading...'; status.className='upload-status';
+                    try {
+                        var url=await uploadImage(file,'/upload/catalog');
+                        var arr=getFabrics(); arr[gi].swatches=arr[gi].swatches||[]; arr[gi].swatches.push({name:swatchName,url:url}); saveFabrics(arr);
+                        if(nameInput) nameInput.value='';
+                        status.textContent='✓ Added'; status.className='upload-status ok';
+                        renderFabrics();
+                    } catch(e){ status.textContent='Error: '+e.message; status.className='upload-status err'; }
+                });
+            });
+        }
+        renderFabrics();
+    })();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

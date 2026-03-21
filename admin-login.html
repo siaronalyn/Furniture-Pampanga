@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Furniture Pampanga</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg, #faf9f7);
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: white;
+            border: 1px solid var(--border-color, #e8e0d5);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo img {
+            height: 56px;
+            margin-bottom: 0.75rem;
+        }
+
+        .login-logo h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1.5rem;
+            color: var(--text, #2c2c2c);
+            margin: 0 0 0.25rem;
+        }
+
+        .login-logo p {
+            color: var(--text-muted, #888);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .login-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .login-field label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text, #2c2c2c);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-field input {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color, #e8e0d5);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text, #2c2c2c);
+            background: var(--bg, #faf9f7);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .login-field input:focus {
+            border-color: var(--accent, #c8956c);
+        }
+
+        .login-btn {
+            background: var(--accent, #c8956c);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background: var(--accent-hover, #b07d58);
+        }
+
+        .login-error {
+            color: #c0392b;
+            font-size: 0.9rem;
+            text-align: center;
+            background: #fdecea;
+            border: 1px solid #f5c6c2;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            display: none;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-link a {
+            color: var(--text-muted, #888);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            color: var(--accent, #c8956c);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="assets/logo.png" alt="Furniture Pampanga Logo" />
+                <h1>Admin Login</h1>
+                <p>Furniture Pampanga and Woodworks</p>
+            </div>
+
+            <form class="login-form" id="loginForm" autocomplete="off">
+                <div class="login-error" id="loginError">Mali ang username o password. Subukan ulit.</div>
+
+                <div class="login-field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required />
+                </div>
+
+                <div class="login-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required />
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="back-link">
+                <a href="index.html">← Back to Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Redirect if already logged in
+        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+            window.location.href = 'admin-dashboard.html';
+        }
+
+        // Credentials — baguhin mo kung gusto mo
+        var ADMIN_USERNAME = 'admin';
+        var ADMIN_PASSWORD = 'furniture2024';
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var username = document.getElementById('username').value.trim();
+            var password = document.getElementById('password').value;
+            var errorEl = document.getElementById('loginError');
+
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                errorEl.classList.add('visible');
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Hide error on input
+        document.getElementById('username').addEventListener('input', function () {
+            document.getElementById('loginError').classList.remove('visible');
+        });
+        document.getElementById('password').addEventListener('input', function () {
+            document.getElementById('loginError').classList.remove('visible');
+        });
+    </script>
+</body>
+</html>

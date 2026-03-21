@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Furniture Demo Data Setup</title>
+</head>
+<body>
+<h1>Load Demo Data for Testing</h1>
+<p>Click button to populate localStorage with sample variant/gallery data for Dining Chair (High-Back).</p>
+<button onclick="loadDemo()">Load Demo Data for High-Back Chair Variants</button>
+<button onclick="loadCatalogPreview()">Load Catalog Grid Previews</button>
+<div id="status"></div>
+<script>
+const HIGH_BACK_CHAIRS = {
+  valen: {name: 'Valen', images: ['assets/images/products/Ducco White .JPG', 'assets/images/products/Light Walnut .JPG', 'assets/images/products/Ducco Gold .JPG', 'assets/images/products/Walnut.JPG']},
+  aurex: {name: 'Aurex', images: ['assets/images/products/Ducco White .JPG', 'assets/images/products/Ash Gray .JPG', 'assets/images/products/Dark Walnut.JPG', 'assets/images/products/Oak Finish.JPG']},
+  serin: {name: 'Serin', images: ['assets/images/products/Ducco Black.JPG', 'assets/images/products/Wengue .JPG', 'assets/images/products/Ducco Gold .JPG', 'assets/images/products/Dark Walnut.JPG']},
+  calver: {name: 'Calver', images: ['assets/images/products/Ash Gray .JPG', 'assets/images/products/Light Walnut .JPG', 'assets/images/products/Oak Finish.JPG', 'assets/images/products/Pinewood Finish .JPG']},
+  elowen: {name: 'Elowen', images: ['assets/images/products/Walnut.JPG', 'assets/images/products/Dark Walnut.JPG', 'assets/images/products/Light Walnut .JPG', 'assets/images/products/Oak Finish.JPG']},
+  ravelle: {name: 'Ravelle', images: ['assets/images/products/Ducco White .JPG', 'assets/images/products/Ducco Gold .JPG', 'assets/images/products/Ash Gray .JPG', 'assets/images/products/Walnut.JPG']}
+};
+function loadDemo() {
+  const data = {};
+  Object.keys(HIGH_BACK_CHAIRS).forEach(k => {
+    data[k] = HIGH_BACK_CHAIRS[k];
+  });
+  localStorage.setItem('furniturePampangaCatalogVariants_chair_highback', JSON.stringify(data));
+  document.getElementById('status').innerHTML = '<p style="color:green;">✅ Demo variant data saved! Refresh catalog.html?category=chair&sub=high-back and click grid items.</p>';
+}
+function loadCatalogPreview() {
+  const previews = {
+    valen: 'assets/images/products/Ducco White .JPG',
+    aurex: 'assets/images/products/Ash Gray .JPG',
+    serin: 'assets/images/products/Ducco Black.JPG',
+    calver: 'assets/images/products/Light Walnut .JPG',
+    elowen: 'assets/images/products/Walnut.JPG',
+    ravelle: 'assets/images/products/Ducco Gold .JPG'
+  };
+  localStorage.setItem('furniturePampangaCatalogListing_chair_highback', JSON.stringify(previews));
+  document.getElementById('status').innerHTML += '<p style="color:green;">✅ Catalog grid images saved!</p>';
+}
+</script>
+</body>
+</html>
